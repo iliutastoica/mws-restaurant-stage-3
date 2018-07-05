@@ -243,7 +243,7 @@ nav h1 a {
   width: 100%;
 }
 
-#restaurant-name {
+#restaurant-name { outline: 0 none;
   color: #444;
   font-family: Arial,sans-serif;
   font-size: 20pt;
@@ -320,6 +320,55 @@ nav h1 a {
   display: flex;
   flex-direction: column;
 }
+
+.heart {
+    display: inline-block;
+    width: 1em;
+    height: auto;
+    margin: 0 .5em 0 0;
+    float: left;
+}
+.form {
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+.form div {
+    display: block;
+    position: relative;
+}
+.review-form {
+    z-index: 2;
+    margin: 20px 0 0;
+}
+.label {
+    display: block;
+    position: relative;
+    margin: 0 0 .5em;
+}
+.label input, .label textarea {
+    display: inline-block;
+    min-width: 320px;
+    box-sizing: border-box;
+    padding: .5em 1em;
+    font-size: 1.25em;
+    font-weight: normal;
+    line-height: 1;
+}
+.formbtn {
+    background-color: #444;
+    color: orange;
+    border: 0;
+    border-bottom: 3px solid #eee;
+    display: inline-block;
+    font-size: 10pt;
+    margin: 15px 0 0;
+    padding: 8px 30px 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
 
 @media (min-width:700px)  {
   #maincontent-top {
