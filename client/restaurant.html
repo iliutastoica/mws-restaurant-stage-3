@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html itemscope="itemscope" itemtype="http://schema.org/WebPage" lang="en-US" class="no-js" lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Restaurant Info</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="content-type" content="text/html" />
+    <meta name="theme-color" content="#642030"/>
+    <meta name="msapplication-TileColor" content="#642030"/>
+    <meta name="msapplication-TileImage" content="meta/256x256.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="application-name" content="Restaurant Reviews" />
+
+    <meta name="skype_toolbar" content="skype_toolbar_parser_compatible" />
+    <meta name="msapplication-tooltip" content="Restaurant Reviews" />
+    <meta name="msapplication-starturl" content="/?pinned=true" />
+
+    <meta name="Application-Name" content="Restaurant-Review" />
+    <meta name="apple-mobile-web-app-title" content="Restaurant-Review">
+    <meta name="Author" content="https://iliutastoica.ro" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="Robots" content="index, follow" />
+ 
+    <!-- CSS files -->
+    <link rel="stylesheet" src="css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+</head>
+
+<body class="inside">
+  <!-- Beginning header -->
+  <header>
+    <!-- Beginning nav -->
+    <nav class="nav" role="navigation">
+      <h1 class="page-title"><a class="page-title-link" href="/" tabindex="-1" title="Restaurant Reviews">Restaurant Reviews</a></h1>
+      <ul class="breadcrumb" id="breadcrumb" >
+        <li><a href="/" title="Go to Home" tabindex="0">Home</a></li>
+      </ul>
+    </nav>
+    <!-- Beginning breadcrumb -->
+
+    <!-- End breadcrumb -->
+    <!-- End nav -->
+  </header>
+  <!-- End header -->
+
+  <!-- Beginning main -->
+  <main id="maincontent">
+    <!-- Beginning map -->
+    <section id="map-container">
+      <div id="map" role="application"></div>
+    </section>
+    <!-- End map -->
+    <!-- Beginning restaurant -->
+    <section id="restaurant-container" class="restaurant-container">
+      <h2 id="restaurant-name" class="restaurant-name"  tabindex="1"></h2>
+      <img id="restaurant-img" src="#" class="restaurant-img" alt="Restaurant image" width="100%" itemprop="image">
+      <p id="restaurant-cuisine" class="restaurant-cuisine"></p>
+      <p id="restaurant-address" class="restaurant-address" tabindex="3"></p>
+      <table id="restaurant-hours" class="restaurant-hours" tabindex="2"></table>
+    </section>
+    <!-- end restaurant -->
+    <!-- Beginning reviews -->
+    <section id="reviews-container" class="reviews-container" >
+      <ul id="reviews-list" class="reviews-list" tabindex="4">
+          <li tabindex="0">
+            <form method="GET" id="review-form" class="form review-form">
+              <div id="restaurant-basic-nav">
+                <label class="label FormLabel" for="name">
+                    <input type="name" id="name" placeholder="Name" name="name">
+                </label>
+              </div>
+              <label class="label FormLabel" id="restaurant-rating" for="rating">
+                  <input type="number" placeholder="Rating" id="rating" name="rating" min="0" max="5" step="1" pattern="d+">
+              </label>
+              <label class="label FormLabel" id="restaurant-comment" for="comments">
+                  <textarea placeholder="Comments" name="comments" id="comments" rows="5"></textarea>
+              </label>
+              <p>
+                  <button class="button formbtn">
+                      <span class="buttontext">Submit</span>
+                  </button>
+              </p>
+            </form>
+          </li>
+      </ul>
+    </section>
+    <!-- End reviews -->
+  </main>
+  <!-- End main -->
+
+  <!-- Beginning footer -->
+  <footer id="footer">
+    Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+  </footer>
+  <!-- End footer -->
+
+  <!-- Beginning scripts -->
+  <script type="application/javascript" src="js/lazyload.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/idb.js"></script>
+  <script type="application/javascript" src="js/store.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/IndexController.js"></script>
+  <!-- Database helpers -->
+  <script type="text/javascript" src="js/dbhelper.js"></script>
+  <!-- Main javascript file -->
+  <script type="text/javascript" src="js/restaurant_info.js"></script>
+  <!-- Google Maps -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3pa-m-yxkEYhP-ohT5qPN3o4OVt0df68&libraries=places&callback=initMap"></script>
+  <!-- End scripts -->
+
+</body>
+
+</html>

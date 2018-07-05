@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html itemscope="itemscope" itemtype="http://schema.org/WebPage" lang="en-US" class="no-js" lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Restaurant Reviews</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="content-type" content="text/html" />
+    <meta name="theme-color" content="#642030"/>
+    <meta name="msapplication-TileColor" content="#642030"/>
+    <meta name="msapplication-TileImage" content="meta/256x256.png"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="application-name" content="Restaurant Reviews" />
+
+    <meta name="skype_toolbar" content="skype_toolbar_parser_compatible" />
+    <meta name="msapplication-tooltip" content="Restaurant Reviews" />
+    <meta name="msapplication-starturl" content="/?pinned=true" />
+
+    <meta name="Application-Name" content="Restaurant-Review" />
+    <meta name="apple-mobile-web-app-title" content="Restaurant-Review">
+    <meta name="Author" content="https://iliutastoica.ro" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="Robots" content="index, follow" />
+    <!-- Facebook -->
+    <meta property="og:title" content="Restaurant Reviews">
+    <meta property="og:site_name" content="Restaurant Reviews"/>
+    <meta property="og:brand" content="Restaurant Reviews">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <meta property="og:description" content="Restaurant Reviews">
+    <meta property="og:image" content="meta/256x256.png">
+    <meta property="og:image:width" content="256">
+    <meta property="og:image:height" content="256">
+
+    <link rel="stylesheet" src="css/normalize.css" />
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body class="Body App">
+<!-- header -->
+<header>
+    <nav class="nav" role="navigation">
+      <h1 class="page-title"><a class="page-title-link" href="/" tabindex="-1" title="Restaurant Reviews">Restaurant Reviews</a></h1>
+    </nav>
+</header>
+<!-- header -->
+
+<!-- Beginning main content -->
+  <main id="maincontent">
+    <section id="map-container">
+      <div id="map" role="application"></div>
+  </section>
+    <section>
+      <div class="filter-options">
+        <h2 class="sub-title">Filter Results</h2>
+        <select tabindex="1" id="neighborhoods-select" name="neighborhoods" aria-label="Select Neighborhood" onchange="updateRestaurants()">
+          <option value="all">All Neighborhoods</option>
+        </select>
+        <select  tabindex="2" id="cuisines-select" name="cuisines" aria-label="Select Cusisine" onchange="updateRestaurants()">
+          <option value="all">All Cuisines</option>
+        </select>
+      </div>
+      <ul id="restaurants-list"></ul>
+    </section>
+  </main>
+<!-- End main content -->
+
+<!-- footer -->
+<footer id="footer">
+Copyright (c) 2018 <a class="footer-link" href="/" title="Restaurant Reviews"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+</footer>
+<!-- footer -->
+
+<!-- Beginning scripts -->
+<script type="application/javascript" src="js/lazyload.js"></script>
+<!-- Database helpers -->
+<script charset="utf-8" src="js/idb.js"></script>
+<script type="application/javascript" src="js/store.js"></script>
+<script charset="utf-8" src="js/IndexController.js"></script>
+<script charset="utf-8" src="js/dbhelper.js"></script>
+
+<!-- Main script file -->
+<script charset="utf-8" src="js/main.js"></script>
+
+<!-- Google Maps -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3pa-m-yxkEYhP-ohT5qPN3o4OVt0df68&libraries=places&callback=initMap"></script>
+
+</body>
+
+</html>
