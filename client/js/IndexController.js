@@ -1,47 +1,45 @@
 const port = 3000; // 1337; // Change this to your server port
 
-// <!-- Service Worker Registration -->
-registerServiceWorker = () => {
-  if (!navigator.serviceWorker) return;
+if ('serviceWorker' in navigator) {
+    // <!-- Service Worker Registration -->
+    registerServiceWorker = () => {
+    if (!navigator.serviceWorker) return;
 
-  navigator.serviceWorker.register('/sw.js').then(function (reg) {
-    console.log('Registration Worked!');
-    if (!navigator.serviceWorker.controller) {
-      return;
+        navigator.serviceWorker.register('./sw.js').then(function (reg) {
+        console.log('Registration Worked!');
+        if (!navigator.serviceWorker.controller) {  return;  }
+
+        var form = document.getElementById('review-form');
+        if ('sync' in reg && form) {
+          form.addEventListener('submit', function(event) {
+              event.preventDefault();
+
+              const review = {
+                "restaurant_id": getParameterByName('id'),
+                "name": document.getElementById("name").value,
+                "rating": document.getElementById("rating").value,
+                "comments": document.getElementById("comments").value,
+                "createdAt": new Date()
+              }
+
+              const ul = document.getElementById('reviews-list');
+              ul.insertBefore(createReviewHTML(review), ul.lastElementChild);
+
+              store.outbox('readwrite').then(function(outbox) {
+                return outbox.put(review);
+              }).then(function() {
+                return reg.sync.register('outbox');
+              }).catch(function(err) {
+                  console.error(err);
+                  form.submit();
+               });
+          });
+        }
+
+        }).catch(function () {   console.log('Registration failed!');    });
     }
-
-    var form = document.getElementById('review-form');
-    if ('sync' in reg && form) {
-      form.addEventListener('submit', function(event) {
-          event.preventDefault();
-
-          const review = {
-            "restaurant_id": getParameterByName('id'),
-            "name": document.getElementById("name").value,
-            "rating": document.getElementById("rating").value,
-            "comments": document.getElementById("comments").value,
-            "createdAt": new Date()
-          }
-
-          const ul = document.getElementById('reviews-list');
-          ul.insertBefore(createReviewHTML(review), ul.lastElementChild);
-
-          store.outbox('readwrite').then(function(outbox) {
-            return outbox.put(review);
-          }).then(function() {
-            return reg.sync.register('outbox');
-          }).catch(function(err) {
-              console.error(err);
-              form.submit();
-           });
-      });
-    }
-
-  }).catch(function () {
-    console.log('Registration failed!')
-  });
+    registerServiceWorker();
 }
-registerServiceWorker();
 store.init();
 
 getParameterByName = (name, url) => {

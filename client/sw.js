@@ -1,22 +1,20 @@
 'use strict';
-importScripts('/js/idb.js');
-importScripts('/js/store.js');
 
-var staticCacheName = 'restaurant-v2';
+var staticCacheName = 'restaurant-v3';
 var imageCacheName = 'mws-image';
 var urlsToCache = [
     '/',
     'index.html',
     'restaurant.html',
-    'css/styles.css',
-    'css/normalize.css',
-    'js/dbhelper.js',
-    'js/lazyload.js',
-    'js/main.js',
-    'js/idb.js',
-    'js/IndexController.js',
-    'js/restaurant_info.js',
-    'js/store.js',
+    './css/styles.css',
+    './css/normalize.css',
+    './js/dbhelper.js',
+    './js/lazyload.js',
+    './js/main.js',
+    './js/idb.js',
+    './js/IndexController.js',
+    './js/restaurant_info.js',
+    './js/store.js',
     // 'data/restaurants.json'
 ];
 var allCaches = [
@@ -70,7 +68,7 @@ self.addEventListener('fetch', function(event) {
 
 function servePhoto(request) {
 
-    var storageUrlRep = request.url.replace(/-\w+\.jpg$/, '');
+    var storageUrlRep = request.url.replace(/-\w+\.webp$/, '');
 
     return caches.open(imageCacheName).then(function(cache) {
         return cache.match(storageUrlRep).then(function (response) {
