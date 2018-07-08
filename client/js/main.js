@@ -11,7 +11,19 @@ if (!port) port = 3000;
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
+  loadMap();
 });
+
+loadMap = () => {
+    function loadScript() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC3pa-m-yxkEYhP-ohT5qPN3o4OVt0df68&libraries=places&callback=initMap';
+        document.body.appendChild(script);
+        console.log('map loading');
+    }
+    setTimeout(loadScript(), 1000);
+}
 
 /**
  * Fetch all neighborhoods and set their HTML.
