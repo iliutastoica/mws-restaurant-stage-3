@@ -7,7 +7,6 @@ var urlsToCache = [
     'index.html',
     'restaurant.html',
     './css/styles.css',
-    './css/normalize.css',
     './js/dbhelper.js',
     './js/lazyload.js',
     './js/main.js',
