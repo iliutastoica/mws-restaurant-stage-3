@@ -56,9 +56,9 @@
 <!-- Beginning main content -->
   <main id="maincontent">
     <section id="map-container">
-      <div id="map" role="application"></div>
+      <div id="map" role="application" aria-label="Map with restaurants"></div>
   </section>
-    <section>
+    <section aria-label="restaurants">
       <div class="filter-options">
         <h2 class="sub-title">Filter Results</h2>
         <select tabindex="0" id="neighborhoods-select" name="neighborhoods" aria-label="Select Neighborhood" onchange="updateRestaurants()">
@@ -80,7 +80,9 @@ Copyright (c) 2018 <a class="footer-link" href="/" title="Restaurant Reviews"><s
 <!-- footer -->
 
 <!-- Beginning scripts -->
-<script type="application/javascript" src="js/lazyload.js"></script>
+<!-- create bundle minified all.js -->
+
+<!-- <script type="application/javascript" src="js/lazyload.js"></script> -->
 <!-- Database helpers -->
 <script charset="utf-8" src="js/idb.js"></script>
 <script type="application/javascript" src="js/store.js"></script>

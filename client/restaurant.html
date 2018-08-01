@@ -30,7 +30,7 @@
     <meta name="Author" content="https://iliutastoica.ro" />
     <meta name="HandheldFriendly" content="true" />
     <meta name="Robots" content="index, follow" />
- 
+
     <!-- CSS files -->
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
 </head>
@@ -53,14 +53,14 @@
   <!-- End header -->
 
   <!-- Beginning main -->
-  <main id="maincontent">
+  <main id="maincontent" class="box main-container">
     <!-- Beginning map -->
     <section id="map-container">
-      <div id="map" role="application"></div>
+      <div id="map" role="application" aria-label="Restaurant map"></div>
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
-    <section id="restaurant-container" class="restaurant-container">
+    <section id="restaurant-container" class="box restaurant-container">
       <h2 id="restaurant-name" class="restaurant-name"  tabindex="0"></h2>
       <img id="restaurant-img" src="#" class="restaurant-img" alt="Restaurant image" width="100%" itemprop="image">
       <p id="restaurant-cuisine" class="restaurant-cuisine"></p>
@@ -69,26 +69,27 @@
     </section>
     <!-- end restaurant -->
     <!-- Beginning reviews -->
-    <section id="reviews-container" class="reviews-container" >
+    <section id="reviews-container" class="box reviews-container" >
       <ul id="reviews-list" class="reviews-list" tabindex="0">
           <li tabindex="0">
-            <form method="GET" id="review-form" class="form review-form">
+            <form method="GET" id="review-form" class="form review-form" aria-label="Add a new review">
                 <fieldset>
                     <legend>Add a review to this restaurant</legend>
+                    <input type="text" name="restaurant_id" id="restaurant_id" style="display: none;">
                     <div id="restaurant-basic-nav">
                         <label class="label FormLabel" for="name">
                         <input type="name" id="name" placeholder="Name" name="name">
                         </label>
                     </div>
                     <label class="label FormLabel" id="restaurant-rating" for="rating">
-                        <input type="number" placeholder="Rating" id="rating" name="rating" min="0" max="5" step="1" pattern="d+">
+                        <input type="number" placeholder="Rating" id="rating" name="rating" min="0" max="5" step="1" pattern="d+" aria-labelledby="restaurant-rating">
                     </label>
                     <label class="label FormLabel" id="restaurant-comment" for="comments">
                         <textarea placeholder="Comments" name="comments" id="comments" rows="5"></textarea>
                     </label>
                     <p>
-                        <button class="button formbtn">
-                            <span class="buttontext">Submit</span>
+                        <button class="button formbtn" id="submit-review">
+                            <span class="buttontext">Submit review</span>
                         </button>
                     </p>
                 </fieldset>
@@ -107,7 +108,9 @@
   <!-- End footer -->
 
   <!-- Beginning scripts -->
-  <script type="application/javascript" src="js/lazyload.js"></script>
+<!-- create bundle minified all.js -->
+
+  <!-- <script type="application/javascript" src="js/lazyload.js"></script> -->
   <script type="application/javascript" charset="utf-8" src="js/idb.js"></script>
   <script type="application/javascript" src="js/store.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/IndexController.js"></script>
