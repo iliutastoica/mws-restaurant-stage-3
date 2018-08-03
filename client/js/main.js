@@ -1,11 +1,9 @@
 // import dbhelper from "./dbhelper.js";
-
 let restaurants,
   neighborhoods,
   cuisines;
 var map, markers = [];
-if (!port) port = 3000;
-
+if (port === 'undefined') port = 3000;
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
@@ -13,10 +11,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   //updateRestaurants();
   fetchNeighborhoods();
   fetchCuisines();
-  // registerServiceWorker();
+  registerServiceWorker();
   loadMap(); //load map with delay
 });
-
 loadMap = () => {
     function loadScript() {
         var script = document.createElement('script');
@@ -27,12 +24,9 @@ loadMap = () => {
     }
     setTimeout(loadScript(), 1000);
 }
-
 /**
  * Fetch all neighborhoods and set their HTML.
  */
-
-
 const fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
@@ -43,12 +37,9 @@ const fetchNeighborhoods = () => {
     }
   });
 }
-
 validateForm = () => {
   console.log(document.forms["myForm"]);
 }
-
-
 /**
  * Set neighborhoods HTML.
  */
@@ -61,7 +52,6 @@ const fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
     select.append(option);
   });
 }
-
 /**
  * Fetch all cuisines and set their HTML.
  */
@@ -75,13 +65,11 @@ const fetchCuisines = () => {
     }
   });
 }
-
 /**
  * Set cuisines HTML.
  */
 const fillCuisinesHTML = (cuisines = self.cuisines) => {
   const select = document.getElementById('cuisines-select');
-
   cuisines.forEach(cuisine => {
     const option = document.createElement('option');
     option.innerHTML = cuisine;
@@ -89,7 +77,6 @@ const fillCuisinesHTML = (cuisines = self.cuisines) => {
     select.append(option);
   });
 }
-
 /**
  * Initialize Google map, called from HTML.
  */
@@ -105,20 +92,16 @@ window.initMap = () => {
   });
   updateRestaurants();
 }
-
 /**
  * Update page and map for current restaurants.
  */
 const updateRestaurants = () => {
   const cSelect = document.getElementById('cuisines-select');
   const nSelect = document.getElementById('neighborhoods-select');
-
   const cIndex = cSelect.selectedIndex;
   const nIndex = nSelect.selectedIndex;
-
   const cuisine = cSelect[cIndex].value;
   const neighborhood = nSelect[nIndex].value;
-
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
     if (error) { // Got an error!
       console.error(error);
@@ -128,7 +111,6 @@ const updateRestaurants = () => {
     }
   })
 }
-
 /**
  * Clear current restaurants, their HTML and remove their map markers.
  */
@@ -137,13 +119,11 @@ const resetRestaurants = (restaurants) => {
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
   ul.innerHTML = '';
-
   // Remove all map markers
   self.markers.forEach(m => m.setMap(null));
   self.markers = [];
   self.restaurants = restaurants;
 }
-
 /**
  * Create all restaurants HTML and add them to the webpage.
  */
@@ -155,57 +135,54 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
   addMarkersToMap();
   DBHelper.lazyLoad();
 }
-
 /**
  * Create restaurant HTML.
  */
 const createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
   li.className = 'restaurant-item';
-
   const isFavorite = document.createElement('button');
-  isFavorite.innerHTML = "&#9733;";
-
+  isFavorite.classList.add("favoritebtn");
+  isFavorite.innerHTML = `<svg class='heart' onClick="favoriteRestaurant(true)" viewBox="0 0 32 29.6">
+      <path id='heartpath' d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+    c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+  </svg>`; //"&#9733;";
   if (restaurant.is_favorite == "true") {
-    console.log("restaurant.is_favorite = true");
-    isFavorite.className = 'is-favorite';
+    console.log(`restaurant ${restaurant.name} -> is_favorite = true`);
+    isFavorite.classList.add('is-favorite');
     isFavorite.setAttribute('aria-label', "Unset restaurant as a favorite");
+    isFavorite.innerHTML = `<svg class='heart complete' onClick="favoriteRestaurant(false)" viewBox="0 0 32 29.6">
+      <path id='heartpath' d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+        c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+    </svg>`;
   } else {
-    console.log("restaurant.is_favorite = false");
+    //console.log("restaurant.is_favorite = false");
     isFavorite.setAttribute('aria-label', "Set restaurant as a favorite");
   }
-
   isFavorite.setAttribute('restaurant_id', restaurant.id);
   isFavorite.addEventListener('click', toggleFavorite);
-
   li.append(isFavorite);
-
   const image = document.createElement('img');
   image.className = 'restaurant-img lazy';
   //image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
   // var myLazyLoad = new LazyLoad();
-
   image.setAttribute("alt", restaurant.name + " Restaurant");
   image.setAttribute("width","100%");
   image.setAttribute('itemprop', 'image');
   li.append(image);
-
   const name = document.createElement('h2');
   name.className = 'restaurant-name';
   name.innerHTML = restaurant.name;
   li.append(name);
-
   const neighborhood = document.createElement('p');
   neighborhood.className = 'restaurant-neighborhood';
   neighborhood.innerHTML = restaurant.neighborhood;
   li.append(neighborhood);
-
   const address = document.createElement('p');
   address.className = 'restaurant-address';
   address.innerHTML = restaurant.address;
   li.append(address);
-
   const more = document.createElement('a');
   more.className = 'restaurant-more';
   more.innerHTML = 'View Details';
@@ -213,10 +190,8 @@ const createRestaurantHTML = (restaurant) => {
   more.setAttribute('itemprop', 'url');
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more)
-
   return li
 }
-
 /**
  * Add markers for current restaurants to the map.
  */
@@ -230,50 +205,35 @@ const addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 }
+const registerServiceWorker = () => {
+  if (!navigator.serviceWorker) return;
 
-// const registerServiceWorker = () => {
-//   if (!navigator.serviceWorker) return;
-//
-//   navigator.serviceWorker.register("/sw.js").then(() => {
-//     console.log ("Registration worked!");
-//     // Then later, request a one-off sync:
-//
-//   }).catch((error) => {
-//     console.log ("Registration failed!", error);
-//   });
-// }
+  navigator.serviceWorker.register("/sw.js").then(() => {
+    console.log ("Registration worked!");
+    // Then later, request a one-off sync:
 
-
+  }).catch((error) => {
+    console.log ("Registration failed!", error);
+  });
+}
 
 const toggleFavorite = function(){
     const toggleButton = this;
     const restaurant_id = toggleButton.getAttribute("restaurant_id");
-
-
-
     if (toggleButton.classList.contains('is-favorite')) {
-
       toggleButton.setAttribute('aria-label', "Set restaurant as a favorite");
       toggleButton.classList.toggle("is-favorite");
       DBHelper.favoriteRestaurant(restaurant_id, false);
-
     } else {
-
       toggleButton.setAttribute('aria-label', "Unset restaurant as a favorite");
       toggleButton.classList.toggle("is-favorite");
       DBHelper.favoriteRestaurant(restaurant_id, true);
     }
-
     navigator.serviceWorker.ready.then(function(swRegistration) {
       console.log("Favorites sync added");
       return swRegistration.sync.register('syncFavorites');
     });
-
-
-
-
 };
-
 // document.getElementById("showMap").addEventListener("click", function(){
 //   document.getElementById("map").classList.toggle("hiden");
 // })
