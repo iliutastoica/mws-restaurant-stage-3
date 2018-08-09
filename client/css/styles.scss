@@ -201,12 +201,14 @@ nav h1 a {
   border: 2px solid #ccc;
   font-family: Arial,sans-serif;
   min-height: 380px;
-  padding: 0 30px 25px;
+  padding: 10px 10px 0;
   text-align: left;
   width: 270px;
   margin: 10px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 #restaurants-list .restaurant-img {
@@ -312,7 +314,7 @@ nav h1 a {
   list-style-type: none;
   margin: 0 0 30px;
   overflow: hidden;
-  padding: 0 20px 20px;
+  padding: 20px;
   position: relative;
   width: 85%;
 }
@@ -332,19 +334,37 @@ nav h1 a {
   flex-direction: column;
 }
 
-.heart {
-    display: inline-block;
-    width: 1em;
-    height: auto;
-    margin: 0 .5em 0 0;
-    float: left;
-
-    cursor: pointer;
-    fill: #bbbbbb;
+.reviewformbox { max-width: 85%;
+    background-color: #fff;
+    border-top: 2px solid #f3f3f3;
+    display: block;
+    list-style-type: none;
+    margin: 1em auto;
+    overflow: hidden;
+    padding: 0 20px 24px;
+    position: relative;
+    width: 85%;
 }
-.heart.complete {
-    fill: red;
-    stroke: red;
+
+.favoritebtn {
+	display: inline-block;
+	width: 1em;
+	height: auto;
+	margin: 0 .5em 0 0;
+	float: left;
+	cursor: pointer;
+	position: absolute;
+	background: none;
+	border: 0;
+	font-size: 2em;
+	fill: #bbbbbb;
+	color: #bbbbbb;
+	left: 10px;
+	top: 10px;
+}
+.favoritebtn.favorite_yes {
+    fill: orange;
+	color: orange;
     animation: pulse 1s ease 1;
 }
 @keyframes pulse {

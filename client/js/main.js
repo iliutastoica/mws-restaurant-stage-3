@@ -8,38 +8,33 @@ if (port === 'undefined') port = 3000;
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  //updateRestaurants();
+    // restaurants will be updated after the map is Initialized
   fetchNeighborhoods();
   fetchCuisines();
-  registerServiceWorker();
   loadMap(); //load map with delay
 });
 loadMap = () => {
-    function loadScript() {
+    function loadMapScript() {
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC3pa-m-yxkEYhP-ohT5qPN3o4OVt0df68&libraries=places&callback=initMap';
         document.body.appendChild(script);
         console.log('map loading');
     }
-    setTimeout(loadScript(), 1000);
+    setTimeout(loadMapScript(), 1000);
 }
 /**
  * Fetch all neighborhoods and set their HTML.
  */
-const fetchNeighborhoods = () => {
-  DBHelper.fetchNeighborhoods((error, neighborhoods) => {
-    if (error) { // Got an error
-      console.error(error);
-    } else {
-      self.neighborhoods = neighborhoods;
-      fillNeighborhoodsHTML();
-    }
-  });
-}
-validateForm = () => {
-  console.log(document.forms["myForm"]);
-}
+ const fetchNeighborhoods = () => {
+   DBHelper.fetchNeighborhoods()
+     .then(neighborhoods => {
+       self.neighborhoods = neighborhoods;
+       fillNeighborhoodsHTML();
+     })
+     .catch(error => console.error(error));
+ }
+
 /**
  * Set neighborhoods HTML.
  */
@@ -56,20 +51,19 @@ const fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
  * Fetch all cuisines and set their HTML.
  */
 const fetchCuisines = () => {
-  DBHelper.fetchCuisines((error, cuisines) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
+  DBHelper.fetchCuisines()
+    .then(cuisines => {
       self.cuisines = cuisines;
       fillCuisinesHTML();
-    }
-  });
+    })
+    .catch(error => console.log(error)); // Got an error!
 }
 /**
  * Set cuisines HTML.
  */
 const fillCuisinesHTML = (cuisines = self.cuisines) => {
   const select = document.getElementById('cuisines-select');
+
   cuisines.forEach(cuisine => {
     const option = document.createElement('option');
     option.innerHTML = cuisine;
@@ -90,27 +84,31 @@ window.initMap = () => {
     center: loc,
     scrollwheel: false
   });
+  // update the restaurants locations
   updateRestaurants();
 }
+
 /**
  * Update page and map for current restaurants.
  */
-const updateRestaurants = () => {
+updateRestaurants = () => {
   const cSelect = document.getElementById('cuisines-select');
   const nSelect = document.getElementById('neighborhoods-select');
+
   const cIndex = cSelect.selectedIndex;
   const nIndex = nSelect.selectedIndex;
+
   const cuisine = cSelect[cIndex].value;
   const neighborhood = nSelect[nIndex].value;
-  DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
+
+  DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood)
+    .then(restaurants => {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
-    }
-  })
+    })
+    .catch(error => console.error(error));
 }
+
 /**
  * Clear current restaurants, their HTML and remove their map markers.
  */
@@ -119,11 +117,15 @@ const resetRestaurants = (restaurants) => {
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
   ul.innerHTML = '';
+
   // Remove all map markers
-  self.markers.forEach(m => m.setMap(null));
+  if (self.markers) {
+    self.markers.forEach(marker => marker.remove());
+  }
   self.markers = [];
   self.restaurants = restaurants;
 }
+
 /**
  * Create all restaurants HTML and add them to the webpage.
  */
@@ -135,105 +137,94 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
   addMarkersToMap();
   DBHelper.lazyLoad();
 }
+
 /**
  * Create restaurant HTML.
  */
 const createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
   li.className = 'restaurant-item';
-  const isFavorite = document.createElement('button');
-  isFavorite.classList.add("favoritebtn");
-  isFavorite.innerHTML = `<svg class='heart' onClick="favoriteRestaurant(true)" viewBox="0 0 32 29.6">
-      <path id='heartpath' d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
-    c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-  </svg>`; //"&#9733;";
-  if (restaurant.is_favorite == "true") {
-    console.log(`restaurant ${restaurant.name} -> is_favorite = true`);
-    isFavorite.classList.add('is-favorite');
-    isFavorite.setAttribute('aria-label', "Unset restaurant as a favorite");
-    isFavorite.innerHTML = `<svg class='heart complete' onClick="favoriteRestaurant(false)" viewBox="0 0 32 29.6">
-      <path id='heartpath' d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
-        c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-    </svg>`;
-  } else {
-    //console.log("restaurant.is_favorite = false");
-    isFavorite.setAttribute('aria-label', "Set restaurant as a favorite");
-  }
-  isFavorite.setAttribute('restaurant_id', restaurant.id);
-  isFavorite.addEventListener('click', toggleFavorite);
-  li.append(isFavorite);
+
+  //favorite part
+  const favourite = document.createElement('button');
+  favourite.classList.add("favoritebtn");
+  favourite.innerHTML = `	&#x2764;`; //"&#9733;";
+  favourite.setAttribute('restaurant_id', restaurant.id);
+  favourite.onclick = function() {
+    const isFavNow = !restaurant.is_favorite;
+    DBHelper.updateFavouriteStatus(restaurant.id, isFavNow);
+    restaurant.is_favorite = !restaurant.is_favorite;
+    changeFavElementClass(favourite, restaurant.is_favorite);
+  };
+  changeFavElementClass(favourite, restaurant.is_favorite);
+  li.append(favourite);
+
+  // image part
   const image = document.createElement('img');
   image.className = 'restaurant-img lazy';
   //image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
   // var myLazyLoad = new LazyLoad();
-  image.setAttribute("alt", restaurant.name + " Restaurant");
+  image.setAttribute("alt", restaurant.name + " Restaurant image");
   image.setAttribute("width","100%");
   image.setAttribute('itemprop', 'image');
   li.append(image);
+
+  //restaurant part
   const name = document.createElement('h2');
   name.className = 'restaurant-name';
   name.innerHTML = restaurant.name;
   li.append(name);
+
   const neighborhood = document.createElement('p');
   neighborhood.className = 'restaurant-neighborhood';
   neighborhood.innerHTML = restaurant.neighborhood;
   li.append(neighborhood);
+
   const address = document.createElement('p');
   address.className = 'restaurant-address';
   address.innerHTML = restaurant.address;
   li.append(address);
+
   const more = document.createElement('a');
   more.className = 'restaurant-more';
   more.innerHTML = 'View Details';
   more.setAttribute('title', 'View Details for ' + restaurant.name);
   more.setAttribute('itemprop', 'url');
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  li.append(more);
+
   return li
 }
+
+/**
+ * change favorite class for restaurant
+ */
+const changeFavElementClass = (el, fav) => {
+  if (!fav) {
+    el.classList.remove('favorite_yes');
+    el.classList.add('favorite_no');
+    el.setAttribute('aria-label', 'Set restaurant as a favorite');
+
+  } else {
+    console.log('toggle favorite update');
+    el.classList.remove('favorite_no');
+    el.classList.add('favorite_yes');
+    el.setAttribute('aria-label', 'Remove restaurant as favorite');
+
+  }
+}
+
 /**
  * Add markers for current restaurants to the map.
  */
 const addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
+    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
     google.maps.event.addListener(marker, 'click', () => {
       window.location.href = marker.url
     });
     self.markers.push(marker);
   });
 }
-const registerServiceWorker = () => {
-  if (!navigator.serviceWorker) return;
-
-  navigator.serviceWorker.register("/sw.js").then(() => {
-    console.log ("Registration worked!");
-    // Then later, request a one-off sync:
-
-  }).catch((error) => {
-    console.log ("Registration failed!", error);
-  });
-}
-
-const toggleFavorite = function(){
-    const toggleButton = this;
-    const restaurant_id = toggleButton.getAttribute("restaurant_id");
-    if (toggleButton.classList.contains('is-favorite')) {
-      toggleButton.setAttribute('aria-label', "Set restaurant as a favorite");
-      toggleButton.classList.toggle("is-favorite");
-      DBHelper.favoriteRestaurant(restaurant_id, false);
-    } else {
-      toggleButton.setAttribute('aria-label', "Unset restaurant as a favorite");
-      toggleButton.classList.toggle("is-favorite");
-      DBHelper.favoriteRestaurant(restaurant_id, true);
-    }
-    navigator.serviceWorker.ready.then(function(swRegistration) {
-      console.log("Favorites sync added");
-      return swRegistration.sync.register('syncFavorites');
-    });
-};
-// document.getElementById("showMap").addEventListener("click", function(){
-//   document.getElementById("map").classList.toggle("hiden");
-// })

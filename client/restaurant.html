@@ -41,6 +41,9 @@
       </ul>
     </nav>
     <!-- Beginning breadcrumb -->
+    <ul class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+    </ul>
     <!-- End breadcrumb -->
     <!-- End nav -->
   </header>
@@ -61,34 +64,38 @@
       <table id="restaurant-hours" class="restaurant-hours" tabindex="0"></table>
     </section>
     <!-- end restaurant -->
+    <!-- Add Reviews Modal -->
+    <section id="form-container" class="box reviewformbox">
+      <form id="review-form" tabindex="0" class="form review-form" aria-label="Add a new review">
+          <fieldset>
+            <legend id="form-name">Add a review to this restaurant</legend>
+            <input type="text" name="restaurant_id" id="restaurant_id" style="display: none;">
+            <div id="restaurant-basic-nav">
+                <label class="label FormLabel" for="review-author">Author:</label></br>
+                <input id="review-author" name="name" type="text" placeholder="Name" />
+            </div>
+            <div class="rating-container">
+              <p>Rating:</p>
+              <select aria-label="Rating select" id="rating_select" name="Rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <label class="label FormLabel" for="review-comments">Comments:</label></br>
+            <textarea id="review-comments" name="comments" placeholder="Comments"></textarea></br>
+            <div id="form-error"></div>
+            <button class="button formbtn submit-button" id="submit-review" onclick="addReview()">
+                <span class="buttontext">Submit review</span>
+            </button>
+        </fieldset>
+      </form>
+    </section>
     <!-- Beginning reviews -->
     <section id="reviews-container" class="box reviews-container" >
-      <ul id="reviews-list" class="reviews-list" tabindex="0">
-          <li tabindex="0">
-            <form method="GET" id="review-form" class="form review-form" aria-label="Add a new review">
-                <fieldset>
-                    <legend>Add a review to this restaurant</legend>
-                    <input type="text" name="restaurant_id" id="restaurant_id" style="display: none;">
-                    <div id="restaurant-basic-nav">
-                        <label class="label FormLabel" for="name">
-                        <input type="name" id="name" placeholder="Name" name="name">
-                        </label>
-                    </div>
-                    <label class="label FormLabel" id="restaurant-rating" for="rating">
-                        <input type="number" placeholder="Rating" id="rating" name="rating" min="0" max="5" step="1" pattern="d+" aria-labelledby="restaurant-rating">
-                    </label>
-                    <label class="label FormLabel" id="restaurant-comment" for="comments">
-                        <textarea placeholder="Comments" name="comments" id="comments" rows="5"></textarea>
-                    </label>
-                    <p>
-                        <button class="button formbtn" id="submit-review">
-                            <span class="buttontext">Submit review</span>
-                        </button>
-                    </p>
-                </fieldset>
-            </form>
-          </li>
-      </ul>
+      <ul id="reviews-list" class="reviews-list" tabindex="1"> </ul>
     </section>
     <!-- End reviews -->
   </main>
@@ -99,13 +106,13 @@
   </footer>
   <!-- End footer -->
   <!-- Beginning scripts -->
-<!-- create bundle minified all.js -->
+  <!-- create bundle minified all.js -->
+
   <!-- <script type="application/javascript" src="js/lazyload.js"></script> -->
-  <script type="application/javascript" charset="utf-8" src="js/idb.js"></script>
-  <script type="application/javascript" src="js/store.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/IndexController.js"></script>
+  <script src="js/register-sw.js"></script>
   <!-- Database helpers -->
-  <script type="text/javascript" src="js/dbhelper.js"></script>
+  <script charset="utf-8" src="js/idb.js"></script>
+  <script charset="utf-8" src="js/dbhelper.js"></script>
   <!-- Main javascript file -->
   <script type="text/javascript" src="js/restaurant_info.js"></script>
   <!-- Google Maps -->
