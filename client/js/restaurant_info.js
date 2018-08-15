@@ -12,7 +12,9 @@ loadMap = () => {
     }
     setTimeout(loadMapScript(), 1000);
 }
-loadMap();
+document.addEventListener('DOMContentLoaded', (event) => {
+  loadMap();
+});
 
 /**
  * Initialize Google map, called from HTML.
@@ -67,9 +69,22 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
+  //favorite part
+  const favourite = document.getElementById('favoritebtn');
+  //favourite.innerHTML = `&#x2764;`; //"&#9733;";
+  favourite.setAttribute('restaurant_id', restaurant.id);
+  favourite.onclick = function() {
+    const isFavNow = !restaurant.is_favorite;
+    DBHelper.updateFavouriteStatus(restaurant.id, isFavNow);
+    restaurant.is_favorite = !restaurant.is_favorite;
+    changeFavElementClass(favourite, restaurant.is_favorite);
+    favourite.setAttribute('aria-pressed', 'true');
+  };
+  changeFavElementClass(favourite, restaurant.is_favorite);
+
   //restaurant image
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img lazy';
+  image.className = 'restaurant-img';
   image.setAttribute("alt", restaurant.name + " Restaurant");
   image.setAttribute("width","100%");
   image.setAttribute('itemprop', 'image');
@@ -86,10 +101,26 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   // fill reviews
   console.log('populate reviews');
-      DBHelper.fetchReviewsByRestId(restaurant.id)
-        .then(reviews => fillReviewsHTML(reviews));
+  DBHelper.fetchReviewsByRestId(restaurant.id).then(reviews => fillReviewsHTML(reviews));
 }
 
+/**
+ * change favorite class for restaurant
+ */
+const changeFavElementClass = (el, fav) => {
+  if (!fav) {
+    el.classList.remove('favorite_yes');
+    el.classList.add('favorite_no');
+    el.setAttribute('aria-label', 'Set restaurant as a favorite');
+    el.setAttribute('aria-pressed', 'false');
+  } else {
+    console.log('toggle favorite update');
+    el.classList.remove('favorite_no');
+    el.classList.add('favorite_yes');
+    el.setAttribute('aria-label', 'Remove restaurant as favorite');
+    el.setAttribute('aria-pressed', 'true');
+  }
+}
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
@@ -169,7 +200,7 @@ const createReviewHTML = (review) => {
 
 
 // Form validation & submission
-addReview = () => {
+const addReview = () => {
     event.preventDefault();
     // Getting the data from the form
     let restaurantId = getParameterByName('id');
@@ -193,7 +224,7 @@ addReview = () => {
     document.getElementById('review-form').reset();
 }
 
-addReviewHTML = (review) => {
+const addReviewHTML = (review) => {
     if (document.getElementById('no-review')) {
         document.getElementById('no-review').remove();
     }

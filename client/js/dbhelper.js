@@ -294,7 +294,7 @@ const port = 3000; // Change this to your server port 1337
                store.put(reviews);
              }
            });
-         console.log('revs are: ', reviews);
+         // console.log('revs are: ', reviews);
          return Promise.resolve(reviews);
        })
        .catch(error => {
@@ -304,6 +304,57 @@ const port = 3000; // Change this to your server port 1337
              return Promise.resolve(storedReviews);
            })
        });
+   }
+
+   static fetchReviews(id) {
+     return this.dbPromise()
+       .then(db => {
+         const tx = db.transaction('reviews');
+         const reviewStore = tx.objectStore('reviews');
+         console.log('all are: ', reviewStore.getAll());
+         return reviewStore.getAll();
+       })
+       .then(reviews => {
+         if (reviews.length !== 0) {
+           console.log('before resolve: ', reviews);
+           return Promise.resolve(reviews);
+         }
+         return this.fetchAndCacheReviews(id);
+       })
+
+   }
+
+   static fetchAndCacheReviews(id) {
+     console.log("id is", id);
+     return fetch(`${DBHelper.DATABASE_URL}reviews/?restaurant_id=${id}`)
+       .then(response => response.json())
+       .then(reviews => {
+         console.log("all rev are", reviews);
+         return this.dbPromise()
+           .then(db => {
+             const tx = db.transaction('reviews', 'readwrite');
+             const restaurantStore = tx.objectStore('reviews');
+             reviews.forEach(review => restaurantStore.put(review));
+
+             return tx.complete.then(() => Promise.resolve(reviews));
+           });
+       });
+   }
+
+   static fetchReviewsByRestaurantId(id) {
+     return this.fetchReviews(id).then(reviews => {
+       return this.dbPromise().then(db => {
+         const tx = db.transaction('reviews');
+         const reviewsStore = tx.objectStore('reviews');
+         const restaurantIndex = reviewsStore.index('restaurant');
+         return restaurantIndex.getAll(id);
+       }).then(restaurantReviews => {
+         const filtered = reviews.filter(review => review.restaurant_id === id);
+         console.log('by id revs are: ', filtered);
+         return filtered;
+
+       })
+     })
    }
 
     static lazyLoad() {

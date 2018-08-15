@@ -40,17 +40,51 @@
       }));
     });
 
-    self.addEventListener('fetch', function (event) {
-      var requestUrl = new URL(event.request.url);
-
-      if (requestUrl.origin === location.origin) {
-        if (requestUrl.pathname === '/') {
-          event.respondWith(caches.match('/'));
-          return;
-        }
-      }
-      // Cache hit - return response
-      event.respondWith(caches.match(event.request).then(function (response) {
-        return response || fetch(event.request);
-      }));
+    self.addEventListener('fetch', (event) => {
+        event.respondWith(
+            caches.match(event.request).then((response) => {
+            // Cache hit - return response
+                if (response) {
+                  return response;
+                }
+                   const fetchRequest = event.request.clone();
+                   const requestURL = event.request.url;
+                return fetch(fetchRequest).then( (response) => {
+                    // Check if we received a valid response
+                    if(!response || response.status !== 200) {
+                          return response;
+                    }
+                    //do not cache API data!
+                    // const rest = requestURL.includes("restaurants");
+                    const rev = requestURL.includes("reviews");
+                    //cache only GET requests
+                       if(event.request.method == "GET" &&  !rev ) {
+                        let responseToCache = response.clone();
+                        caches.open(staticCacheName).then((cache) => {
+                            cache.put(event.request, responseToCache);
+                         });
+                        return response;
+                    } else {
+                    return response;
+                    }
+                }).catch(error => {
+                        console.error('Error fetching in ServiceWorker:', error)
+                })
+            }).catch(error => console.error('Response error :', error))
+        );
     });
+
+    // self.addEventListener('fetch', function (event) {
+    //   var requestUrl = new URL(event.request.url);
+    //
+    //   if (requestUrl.origin === location.origin) {
+    //     if (requestUrl.pathname === '/') {
+    //       event.respondWith(caches.match('/'));
+    //       return;
+    //     }
+    //   }
+    //   // Cache hit - return response
+    //   event.respondWith(caches.match(event.request).then(function (response) {
+    //     return response || fetch(event.request);
+    //   }));
+    // });

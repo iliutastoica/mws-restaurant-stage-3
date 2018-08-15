@@ -85,7 +85,7 @@ window.initMap = () => {
     scrollwheel: false
   });
   // update the restaurants locations
-  updateRestaurants();
+  setTimeout(updateRestaurants(), 1500);
 }
 
 /**
@@ -119,9 +119,7 @@ const resetRestaurants = (restaurants) => {
   ul.innerHTML = '';
 
   // Remove all map markers
-  if (self.markers) {
-    self.markers.forEach(marker => marker.remove());
-  }
+  self.markers.forEach(m => m.setMap(null));
   self.markers = [];
   self.restaurants = restaurants;
 }
@@ -130,12 +128,12 @@ const resetRestaurants = (restaurants) => {
  * Create all restaurants HTML and add them to the webpage.
  */
 const fillRestaurantsHTML = (restaurants = self.restaurants) => {
-  const ul = document.getElementById('restaurants-list');
-  restaurants.forEach(restaurant => {
+    let tabIndex = 3;
+    const ul = document.getElementById('restaurants-list');
+    restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
-  });
-  addMarkersToMap();
-  DBHelper.lazyLoad();
+    });
+    setTimeout(addMarkersToMap(), 1500);
 }
 
 /**
@@ -148,12 +146,14 @@ const createRestaurantHTML = (restaurant) => {
   //favorite part
   const favourite = document.createElement('button');
   favourite.classList.add("favoritebtn");
-  favourite.innerHTML = `	&#x2764;`; //"&#9733;";
+  favourite.innerHTML = `&#x2764;`; //"&#9733;";
   favourite.setAttribute('restaurant_id', restaurant.id);
+  favourite.setAttribute('aria-pressed', 'false');
   favourite.onclick = function() {
     const isFavNow = !restaurant.is_favorite;
     DBHelper.updateFavouriteStatus(restaurant.id, isFavNow);
     restaurant.is_favorite = !restaurant.is_favorite;
+    favourite.setAttribute('aria-pressed', 'true');
     changeFavElementClass(favourite, restaurant.is_favorite);
   };
   changeFavElementClass(favourite, restaurant.is_favorite);
@@ -161,13 +161,32 @@ const createRestaurantHTML = (restaurant) => {
 
   // image part
   const image = document.createElement('img');
-  image.className = 'restaurant-img lazy';
-  //image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
-  // var myLazyLoad = new LazyLoad();
+  image.className = 'restaurant-img';
   image.setAttribute("alt", restaurant.name + " Restaurant image");
   image.setAttribute("width","100%");
   image.setAttribute('itemprop', 'image');
+  const config = {  threshold: 0.1 };
+  let observer;
+  if ('IntersectionObserver' in window) {
+    observer = new IntersectionObserver(onChange, config);
+    observer.observe(image);
+  } else {
+    console.log('Intersection Observers not supported', 'color: red');
+    loadImage(image);
+  }
+  const loadImage = image => {
+    image.className = 'restaurant-img';
+    image.setAttribute('src', DBHelper.imageUrlForRestaurant(restaurant));
+  }
+
+  function onChange(changes, observer) {
+    changes.forEach(change => {
+      if (change.intersectionRatio > 0) {   //console.log('image in View');
+        loadImage(change.target); // Stop watching and load the image
+        observer.unobserve(change.target);
+      }
+    });
+  }
   li.append(image);
 
   //restaurant part
@@ -205,13 +224,13 @@ const changeFavElementClass = (el, fav) => {
     el.classList.remove('favorite_yes');
     el.classList.add('favorite_no');
     el.setAttribute('aria-label', 'Set restaurant as a favorite');
-
+    el.setAttribute('aria-pressed', 'false');
   } else {
     console.log('toggle favorite update');
     el.classList.remove('favorite_no');
     el.classList.add('favorite_yes');
     el.setAttribute('aria-label', 'Remove restaurant as favorite');
-
+    el.setAttribute('aria-pressed', 'true');
   }
 }
 
@@ -219,6 +238,7 @@ const changeFavElementClass = (el, fav) => {
  * Add markers for current restaurants to the map.
  */
 const addMarkersToMap = (restaurants = self.restaurants) => {
+    console.log('add markers to restaurants');
   restaurants.forEach(restaurant => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);

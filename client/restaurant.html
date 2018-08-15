@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html itemscope="itemscope" itemtype="http://schema.org/WebPage" lang="en-US" class="no-js" lang="en-US">
+<html itemscope="itemscope" itemtype="http://schema.org/WebPage" lang="en-US" class="no-js">
 <head>
     <meta charset="utf-8">
     <title>Restaurant Info</title>
@@ -13,12 +13,14 @@
     <meta name="msapplication-TileImage" content="meta/256x256.png"/>
     <meta name="theme-color" content="#252831">
     <link rel="manifest" href="manifest.json">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-touch-fullscreen" content="yes"/>
     <meta name="application-name" content="Restaurant Reviews" />
+    <meta name="Description" content="Author: Iliuta Stoica, Category: Restaurant Review, Page: Home for Restaurant Review">
+    
     <meta name="skype_toolbar" content="skype_toolbar_parser_compatible" />
     <meta name="msapplication-tooltip" content="Restaurant Reviews" />
     <meta name="msapplication-starturl" content="/?pinned=true" />
@@ -36,13 +38,10 @@
     <!-- Beginning nav -->
     <nav class="nav" role="navigation">
       <h1 class="page-title"><a class="page-title-link" href="/" tabindex="-1" title="Restaurant Reviews">Restaurant Reviews</a></h1>
-      <ul class="breadcrumb" id="breadcrumb" >
-        <li><a href="/" title="Go to Home" tabindex="0">Home</a></li>
-      </ul>
     </nav>
     <!-- Beginning breadcrumb -->
     <ul class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
-      <li><a href="/">Home</a></li>
+     <li class="breaditem"><a class="breadlink" href="/" title="Go to Home" tabindex="0">Home</a></li>
     </ul>
     <!-- End breadcrumb -->
     <!-- End nav -->
@@ -58,13 +57,15 @@
     <!-- Beginning restaurant -->
     <section id="restaurant-container" class="box restaurant-container">
       <h2 id="restaurant-name" class="restaurant-name"  tabindex="0"></h2>
+      <button id="favoritebtn" class="favoritebtn">&#x2764;</button>
       <img id="restaurant-img" src="#" class="restaurant-img" alt="Restaurant image" width="100%" itemprop="image">
       <p id="restaurant-cuisine" class="restaurant-cuisine"></p>
       <p id="restaurant-address" class="restaurant-address" tabindex="0"></p>
       <table id="restaurant-hours" class="restaurant-hours" tabindex="0"></table>
     </section>
     <!-- end restaurant -->
-    <!-- Add Reviews Modal -->
+    
+    <!-- Add Reviews Form -->
     <section id="form-container" class="box reviewformbox">
       <form id="review-form" tabindex="0" class="form review-form" aria-label="Add a new review">
           <fieldset>
@@ -95,7 +96,7 @@
     </section>
     <!-- Beginning reviews -->
     <section id="reviews-container" class="box reviews-container" >
-      <ul id="reviews-list" class="reviews-list" tabindex="1"> </ul>
+      <ul id="reviews-list" class="reviews-list" tabindex="0"> </ul>
     </section>
     <!-- End reviews -->
   </main>
