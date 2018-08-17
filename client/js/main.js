@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   fetchCuisines();
   loadMap(); //load map with delay
 });
-loadMap = () => {
+const loadMap = () => {
     function loadMapScript() {
         var script = document.createElement('script');
         script.type = 'text/javascript';
@@ -91,7 +91,7 @@ window.initMap = () => {
 /**
  * Update page and map for current restaurants.
  */
-updateRestaurants = () => {
+const updateRestaurants = () => {
   const cSelect = document.getElementById('cuisines-select');
   const nSelect = document.getElementById('neighborhoods-select');
 

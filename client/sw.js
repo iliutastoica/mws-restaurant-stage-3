@@ -1,4 +1,4 @@
-    var staticCacheName = 'restaurant-static-v3';
+    var staticCacheName = 'restaurant-static-v4';
     var contentImgsCache = 'restaurant-content-imgs';
     var allCaches = [staticCacheName, contentImgsCache];
 
@@ -7,25 +7,27 @@
       event.waitUntil(caches.open(staticCacheName).then(function (cache) {
         console.log('Opened cache');
 
-        return cache.addAll(['/',
-          '/css/styles.css',
-          '/img/1.webp',
-          '/img/2.webp',
-          '/img/3.webp',
-          '/img/4.webp',
-          '/img/5.webp',
-          '/img/6.webp',
-          '/img/7.webp',
-          '/img/8.webp',
-          '/img/9.webp',
-          '/img/10.webp',
-          '/img/undefined.webp',
-          '/img/map.webp',
-          '/js/main.js',
-          '/js/idb.js',
-          '/js/dbhelper.js',
-          '/js/restaurant_info.js',
-          '/data/restaurants.json'
+        return cache.addAll([
+            '/',
+            '/index.html',
+            '/css/styles.css',
+            '/img/1.webp',
+            '/img/2.webp',
+            '/img/3.webp',
+            '/img/4.webp',
+            '/img/5.webp',
+            '/img/6.webp',
+            '/img/7.webp',
+            '/img/8.webp',
+            '/img/9.webp',
+            '/img/10.webp',
+            '/img/undefined.webp',
+            '/img/map.webp',
+            '/js/main.js',
+            '/js/idb.js',
+            '/js/dbhelper.js',
+            '/js/restaurant_info.js',
+            '/data/restaurants.json'
         ]);
       }));
     });
