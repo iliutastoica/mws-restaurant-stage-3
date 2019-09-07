@@ -1,0 +1,137 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - sails > sails-hook-sockets > socket.io > socket.io-adapter > socket.io-parser > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > snapdragon > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > send > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > @sailshq/body-parser > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > morgan > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > sails-hook-sockets > machinepack-urls > machine > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > method-override > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > finalhandler > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > express-session > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > connect-timeout > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > compression > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > serve-index > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > grunt-contrib-watch > tiny-lr > body-parser > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > serve-static > send > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > i18n > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > nanomatch > snapdragon > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > extglob > snapdragon > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > braces > snapdragon > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > extglob > expand-brackets > snapdragon > debug:
+        patched: '2019-09-07T17:52:48.673Z'
+  'npm:extend:20180424':
+    - critical > postcss-image-inliner > request > extend:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > request > extend:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > grunt-contrib-less > less > request > extend:
+        patched: '2019-09-07T17:52:48.673Z'
+  'npm:lodash:20180130':
+    - sails-disk > waterline-cursor > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > captains-log > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > sails-util > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails-disk > waterline-criteria > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > skipper > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > include-all > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > sails-generate > sails-generate-generator > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > sails-disk > waterline-cursor > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > sails-disk > waterline-criteria > lodash:
+        patched: '2019-09-07T17:52:48.673Z'
+  'npm:mime:20170907':
+    - sails > grunt-contrib-less > less > mime:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > serve-static > send > mime:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > send > mime:
+        patched: '2019-09-07T17:52:48.673Z'
+  'npm:ms:20170412':
+    - sails > @sailshq/express > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > send > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > i18n > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > send > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > serve-favicon > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > connect-timeout > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > grunt-contrib-watch > tiny-lr > body-parser > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > serve-static > send > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > express-session > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > method-override > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > connect-timeout > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > compression > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > finalhandler > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > morgan > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > @sailshq/body-parser > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > sails-hook-sockets > machinepack-urls > machine > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > serve-index > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > sails-hook-sockets > socket.io > socket.io-adapter > socket.io-parser > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > serve-static > send > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > snapdragon > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > nanomatch > snapdragon > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > extglob > snapdragon > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > braces > snapdragon > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+    - critical > postcss-image-inliner > asset-resolver > globby > fast-glob > micromatch > extglob > expand-brackets > snapdragon > debug > ms:
+        patched: '2019-09-07T17:52:48.673Z'
+  'npm:negotiator:20160616':
+    - sails > @sailshq/express > @sailshq/connect > compression > accepts > negotiator:
+        patched: '2019-09-07T17:52:48.673Z'
+    - sails > @sailshq/express > @sailshq/connect > serve-index > accepts > negotiator:
+        patched: '2019-09-07T17:52:48.673Z'
