@@ -72,6 +72,18 @@ patch:
         patched: '2019-09-07T17:52:48.673Z'
     - sails > sails-disk > waterline-criteria > lodash:
         patched: '2019-09-07T17:52:48.673Z'
+    - sails-disk > machinepack-fs > machine > lodash:
+        patched: '2019-09-07T18:01:34.952Z'
+    - sails-disk > machinepack-fs > machinepack-strings > lodash:
+        patched: '2019-09-07T18:01:34.952Z'
+    - sails-disk > machinepack-fs > machinepack-util > lodash:
+        patched: '2019-09-07T18:01:34.952Z'
+    - sails-disk > machinepack-fs > machinepack-json > machine > lodash:
+        patched: '2019-09-07T18:01:34.952Z'
+    - sails-disk > machinepack-fs > machinepack-strings > machine > lodash:
+        patched: '2019-09-07T18:01:34.952Z'
+    - sails-disk > machinepack-fs > machinepack-util > machine > lodash:
+        patched: '2019-09-07T18:01:34.952Z'
   'npm:mime:20170907':
     - sails > grunt-contrib-less > less > mime:
         patched: '2019-09-07T17:52:48.673Z'
