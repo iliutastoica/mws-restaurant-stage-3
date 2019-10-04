@@ -147,3 +147,10 @@ patch:
         patched: '2019-09-07T17:52:48.673Z'
     - sails > @sailshq/express > @sailshq/connect > serve-index > accepts > negotiator:
         patched: '2019-09-07T17:52:48.673Z'
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-10-04T04:39:55.428Z'
+    - critical > penthouse > puppeteer > https-proxy-agent:
+        patched: '2019-10-04T04:39:55.428Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-04T04:39:55.428Z'
