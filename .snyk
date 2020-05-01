@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.5
+version: v1.14.1
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -147,3 +147,50 @@ patch:
         patched: '2019-09-07T17:52:48.673Z'
     - sails > @sailshq/express > @sailshq/connect > serve-index > accepts > negotiator:
         patched: '2019-09-07T17:52:48.673Z'
+  SNYK-JS-LODASH-567746:
+    - critical > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - critical > filter-css > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - critical > group-args > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - critical > inline-critical > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - sails > async > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - sails-disk > async > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > inquirer > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > snyk-config > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - critical > inline-critical > postcss-discard > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - critical > postcss-image-inliner > asset-resolver > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - sails > machinepack-redis > async > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - sails > sails-generate > async > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - sails > skipper > async > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > snyk-nuget-plugin > dotnet-deps-parser > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2020-05-01T04:40:19.615Z'
